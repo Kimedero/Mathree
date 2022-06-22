@@ -1,0 +1,107 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://tile_tex.png" type="Texture" id=1]
+[ext_resource path="res://motion_blur/motion_blur.tscn" type="PackedScene" id=2]
+
+[sub_resource type="Environment" id=1]
+ambient_light_color = Color( 0.800781, 0.800781, 0.800781, 1 )
+fog_color = Color( 0.626361, 0.729196, 0.832031, 1 )
+fog_depth_begin = 54.1
+fog_depth_curve = 0.000166753
+fog_height_min = 0.0
+fog_height_max = 100.0
+ssao_radius = 4.1
+ssao_intensity = 67.5
+ssao_quality = 0
+glow_enabled = true
+glow_blend_mode = 1
+
+[sub_resource type="CubeMesh" id=2]
+size = Vector3( 100, 100, 100 )
+
+[sub_resource type="SpatialMaterial" id=3]
+params_cull_mode = 1
+albedo_texture = ExtResource( 1 )
+roughness = 0.0
+uv1_scale = Vector3( 0.1, 0.1, 0.1 )
+uv1_triplanar = true
+
+[sub_resource type="Animation" id=4]
+resource_name = "cam_move"
+length = 13.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("cam:translation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2, 3, 4, 5, 5.85025 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 5, 0, 0 ), Vector3( 5, 0, 5 ), Vector3( 5, 40, 5 ), Vector3( 5, -15, 5 ), Vector3( 0, -50, 5 ), Vector3( -0.237464, -48.0414, 4.65558 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("cam:rotation_degrees")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.7, 11.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 1.9e-05, 0, 90 ), Vector3( 0, 0, 0 ), Vector3( 90, 0, 0 ), Vector3( 90, 0, 0 ), Vector3( 90, 0, 0 ), Vector3( 90, 180, 0 ), Vector3( 90, 180, 0 ), Vector3( 1.9e-05, 0, 90 ), Vector3( 0, 0, 90 ), Vector3( 360, 0, 90 ), Vector3( 0, 0, 90 ) ]
+}
+
+[sub_resource type="ParticlesMaterial" id=5]
+emission_shape = 2
+emission_box_extents = Vector3( 100, 100, 100 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+
+[sub_resource type="SpatialMaterial" id=6]
+albedo_color = Color( 0, 0.578125, 1, 1 )
+albedo_texture = ExtResource( 1 )
+roughness = 0.0
+uv1_triplanar = true
+
+[sub_resource type="SphereMesh" id=7]
+material = SubResource( 6 )
+radial_segments = 8
+rings = 4
+
+[node name="main" type="WorldEnvironment"]
+environment = SubResource( 1 )
+
+[node name="floor" type="MeshInstance" parent="."]
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="anim" type="AnimationPlayer" parent="."]
+autoplay = "cam_move"
+playback_speed = 2.0
+anims/cam_move = SubResource( 4 )
+
+[node name="cam" type="Camera" parent="."]
+transform = Transform( 1.00014, 0, 0, 0, -0.0753291, -0.997252, 0, 0.997188, -0.075334, 5, 28.92, 5.24 )
+fov = 62.3
+size = 19.79
+near = 0.01
+far = 1000.0
+
+[node name="motion_blur" parent="cam" instance=ExtResource( 2 )]
+
+[node name="particles" type="Particles" parent="."]
+amount = 8000
+lifetime = 15.0
+preprocess = 100.0
+speed_scale = 0.1
+visibility_aabb = AABB( -400, -400, -400, 800, 800, 800 )
+process_material = SubResource( 5 )
+draw_pass_1 = SubResource( 7 )
+
+[node name="light" type="DirectionalLight" parent="."]
+transform = Transform( 0.543656, 0.837884, -0.0488815, -0.446137, 0.337822, 0.828757, 0.710915, -0.428751, 0.55747, 0, 3.82309, 0 )
+directional_shadow_max_distance = 200.0

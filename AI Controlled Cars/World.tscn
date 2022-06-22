@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Cars/Matatu.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Cars/Minibus.tscn" type="PackedScene" id=2]
+[ext_resource path="res://World.gd" type="Script" id=3]
+[ext_resource path="res://Tracks/Track1.tscn" type="PackedScene" id=4]
+
+[node name="World" type="Spatial"]
+script = ExtResource( 3 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, -0.866026, 0.5, 0, -0.5, -0.866026, 0, 0, 0 )
+shadow_enabled = true
+
+[node name="Track1" parent="." instance=ExtResource( 4 )]
+
+[node name="Cars" type="Spatial" parent="."]
+
+[node name="Matatu" parent="Cars" instance=ExtResource( 1 )]
+transform = Transform( -0.0268749, 0, 0.999639, 0, 1, 0, -0.999639, 0, -0.0268749, 20.3377, 1, -2.09451 )
+
+[node name="Matatu2" parent="Cars" instance=ExtResource( 1 )]
+transform = Transform( -0.0268749, 0, 0.999639, 0, 1, 0, -0.999639, 0, -0.0268749, 11.9588, 1, -1.58759 )
+
+[node name="Minibus" parent="Cars" instance=ExtResource( 2 )]
+transform = Transform( -0.0268749, 0, 0.999639, 0, 1, 0, -0.999639, 0, -0.0268749, -5.33567, 1, -0.775634 )

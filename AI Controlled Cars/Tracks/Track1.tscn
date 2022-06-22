@@ -1,0 +1,70 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_texture = ExtResource( 1 )
+uv1_triplanar = true
+
+[sub_resource type="Curve3D" id=3]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, 385.117, 0, -2.99554, 84, 0, -1, -84, 0, 1, 24, 0, 0, 87.1, 0, 0, -87.1, 0, 0, -195, 0, -133, 65.9, 0, -4.8, -65.9, 0, 4.8, -382, 0, -130, 0, 0, 0, 0, 0, 0, -447.935, -1.50598e-05, -191.824, -1.7, 0, 61.1, 1.7, 0, -61.1, -448.781, -3.05176e-05, -387.358, 0, 0, 0, 0, 0, 0, -383.607, -3.05176e-05, -450.861, 0, 0, 0, 0, 0, 0, -191.426, -3.05176e-05, -450.861, 2.4, 0, -73.1, -2.4, 0, 73.1, -132.936, -3.05176e-05, -384.015, 0, 0, 0, 0, 0, 0, -129.594, 0, -193.505, -78.6, 0, 3.1, 78.6, 0, -3.1, -59.4057, 0, -131.673, -66, 0, -20, 66, 0, 20, 131.104, 0, -133.344, -46, 0, 66.7, 46, 0, -66.7, 255, 0, -195, -10.9, 0, 27.9, 10.9, 0, -27.9, 306, 0, -376, -23.1, 0, 1.7, 23.1, 0, -1.7, 385.117, -3.05176e-05, -442.505, 0, 0, 0, 0, 0, 0, 448.621, -3.05176e-05, -445.848, 14, 0, -68, -14, 0, 68, 510.453, -3.05176e-05, -384.015, 11.1, 0, -67, -11.1, 0, 67, 448.621, 0, -61.4854, 0, 0, 0, 0, 0, 0, 385.117, 0, -2.99554 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+}
+
+[node name="Track1" type="Spatial"]
+
+[node name="floor" type="CSGPolygon" parent="."]
+use_collision = true
+collision_layer = 2
+polygon = PoolVector2Array( -11, 0, -11, 1, 10, 1, 10, 0 )
+mode = 2
+path_node = NodePath("../Path")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = true
+material = SubResource( 2 )
+
+[node name="outer_wall" type="CSGPolygon" parent="."]
+use_collision = true
+collision_layer = 2
+polygon = PoolVector2Array( -11, 0, -11, 4, -10, 4, -11, 0 )
+mode = 2
+path_node = NodePath("../Path")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = true
+material = SubResource( 2 )
+
+[node name="inner_wall" type="CSGPolygon" parent="."]
+use_collision = true
+collision_layer = 2
+polygon = PoolVector2Array( 10, 0, 10, 4, 11, 4, 11, 0 )
+mode = 2
+path_node = NodePath("../Path")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = true
+material = SubResource( 2 )
+
+[node name="Path" type="Path" parent="."]
+curve = SubResource( 3 )
+
+[node name="PathFollow" type="PathFollow" parent="Path"]
+transform = Transform( 0.00200834, 0, -0.999998, 0, 1, 0, 0.999998, 0, 0.00200834, 385.117, 0, -2.99554 )
+rotation_mode = 4
