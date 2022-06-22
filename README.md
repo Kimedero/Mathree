@@ -14,4 +14,8 @@ We might have figure out a better way to reduce speed according to the distance 
 
 Also, there's an application of brakes, when the mathree speed is high and there appears to be an obstacle ahead suddenly.
 
-The mathree can also unflip itself GTA5-style.
+The mathree can also unflip itself GTA5-style, by applying a rotational force to itself, while accounting for its weight.
+
+We use timers to check for changes in condition, because commiting the checking to every frame (via _process or _physics_process) would overuse the CPU and slow down the game. This is to be tested further.
+
+Enjoy and reach out if you make any interesting changes or have questions. I'd love to see what can happen, from here.
